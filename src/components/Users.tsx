@@ -2,7 +2,7 @@ import React from 'react'
 import useUsers from '../hooks/useUsers'
 
 export default function Names() {
-	const users = useUsers()
+	const users = useUsers('aKey')
 
 	return (
 		<>

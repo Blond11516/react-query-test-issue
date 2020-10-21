@@ -8,8 +8,8 @@ jest.mock('../../services/UsersClient')
 describe('useUsers', () => {
 	let result: RenderHookResult<Parameters<typeof useUsers>, ReturnType<typeof useUsers>>
 
-	const render = () => {
-		result = renderHook(() => useUsers('aKey'))
+	const render = (key: string) => {
+		result = renderHook(() => useUsers(key))
 	}
 
 	beforeEach(() => {
@@ -24,7 +24,7 @@ describe('useUsers', () => {
 	})
 
 	it('should request the users', () => {
-		render()
+		render('test1')
 		expect(UsersClient.fetchUsers).toHaveBeenCalled()
 	})
 
@@ -36,7 +36,7 @@ describe('useUsers', () => {
 		});
 
 		it('should return the users', async () => {
-			render()
+			render('test2')
 			await result.waitForNextUpdate()
 			expect(result.result.current).toEqual([user])
 		})

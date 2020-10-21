@@ -2,19 +2,17 @@ import React from 'react'
 import { act, renderHook, RenderHookResult } from "@testing-library/react-hooks"
 import useUsers from '../useUsers'
 import * as UsersClient from '../../services/UsersClient'
-import { Query, QueryCache, ReactQueryCacheProvider } from "react-query"
+import { Query, QueryCache, queryCache, ReactQueryCacheProvider } from "react-query"
 
 jest.mock('../../services/UsersClient')
-
-const queryCache = new QueryCache()
 
 describe('useUsers', () => {
 	let result: RenderHookResult<Parameters<typeof useUsers>, ReturnType<typeof useUsers>>
 
 	const render = () => {
-		result = renderHook(useUsers,
+		result = renderHook(() => useUsers('aKey'),
 			{
-				wrapper: ({ children }) => <ReactQueryCacheProvider queryCache={queryCache}>{children}</ReactQueryCacheProvider>
+				wrapper: ({ children }) => <ReactQueryCacheProvider queryCache={new QueryCache()}>{children}</ReactQueryCacheProvider>
 			}
 		)
 	}
